@@ -1,12 +1,5 @@
 name: test_ci
 
-#on:
-#  pull_request:
-#    types:
-#      - opened
-#      - edited
-#      - synchronize
-#      - reopened
 on:
   pull_request:
     branches:
@@ -23,16 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: "☁️ checkout repository"
+      - name: "checkout repository"
         uses: actions/checkout@v2
 
-      - name: "🔧 install dependencies"
+      - name: "install dependencies"
         run: |
           pip install -r src/requirements.txt
           pip install pylint
 
       - name: "run pylint"
-        run: pylint $(git ls-files '*.py')
+        run: pylint $(git ls -l *.py)
 #
 #      - name: "🔍 run tests"
 #        run: npm run test --if-present
