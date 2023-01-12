@@ -1,0 +1,60 @@
+name: test_ci
+
+#on:
+#  pull_request:
+#    types:
+#      - opened
+#      - edited
+#      - synchronize
+#      - reopened
+on:
+  pull_request:
+    branch:
+      - main
+      - develop
+    push:
+      branch:
+        - main
+  workflow_call:
+
+jobs:
+  test:
+    name: code standard
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: "☁️ checkout repository"
+        uses: actions/checkout@v2
+
+      - name: "🔧 install dependencies"
+        run: |
+          pip install -r src/requirements.txt
+          pip install pylint
+
+      - name: "run pylint"
+        uses: pylint $(git ls -l *.py)
+#
+#      - name: "🔍 run tests"
+#        run: npm run test --if-present
+
+#  lint:
+#    name: Code standards
+#    runs-on: ubuntu-latest
+#    timeout-minutes: 10
+#    steps:
+#      - name: "☁️ checkout repository"
+#        uses: actions/checkout@v2
+#
+#      - name: "🔧 setup node"
+#        uses: actions/setup-node@v2.1.5
+#        with:
+#          node-version: 16
+#
+#      - name: "🔧 install npm@latest"
+#        run: npm i -g npm@latest
+#
+#      - name: "📦 install dependencies"
+#        uses: bahmutov/npm-install@v1
+#
+#      - name: "🔍 lint code"
+#        run: npm run lint --if-present
