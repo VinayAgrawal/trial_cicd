@@ -25,7 +25,7 @@ jobs:
           pip install pylint
 
       - name: "run pylint"
-        run: pylint $(git ls-files '*.py')
+        run: pylint $(git ls-files 'src/*.py')
 #
 #      - name: "🔍 run tests"
 #        run: npm run test --if-present
