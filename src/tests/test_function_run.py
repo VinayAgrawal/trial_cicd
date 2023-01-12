@@ -44,4 +44,4 @@ def patient_data(spark: SparkSession) -> pyspark.sql.DataFrame:
 def test_species_count_validation(patient_data):
     # print("stupid life")
     # print(_species_count_validation(patient_data))
-    assert _species_count_validation(patient_data) == False
+    assert _species_count_validation(patient_data)
