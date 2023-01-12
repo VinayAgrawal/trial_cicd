@@ -1,4 +1,6 @@
-FROM python:3.8-stretch
+#FROM python:3.8-stretch
+ARG BASE_IMAGE=python:3.9-slim
+FROM $BASE_IMAGE as runtime-environment
 
 USER root
 
