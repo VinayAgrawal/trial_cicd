@@ -1,5 +1,5 @@
 #FROM python:3.8-stretch
-FROM alpine:3.16
+FROM python:3.8.16-slim-buster
 #ARG BASE_IMAGE=python:3.9-slim
 #FROM $BASE_IMAGE as runtime-environment
 
