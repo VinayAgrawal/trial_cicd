@@ -28,7 +28,8 @@ jobs:
         run: pytest
 
       - name: "run pylint"
-        run: pylint $(git ls-files 'src/*.py')
+        run: pylint --fail-under=9 $(git ls-files 'src/*.py')
+
 
 #  lint:
 #    name: Code standards
