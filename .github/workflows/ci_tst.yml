@@ -26,9 +26,9 @@ jobs:
 
       - name: "run pylint"
         run: pylint $(git ls-files '*.py')
-#
-#      - name: "🔍 run tests"
-#        run: npm run test --if-present
+
+      - name: "🔍 run tests"
+        run: pytest
 
 #  lint:
 #    name: Code standards
