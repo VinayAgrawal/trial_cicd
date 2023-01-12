@@ -11,6 +11,20 @@ import pandas as pd
 from pyspark.sql import DataFrame
 
 
+def _species_count_validation(input_train_df: DataFrame):
+    """Checks if data has more than 2 species in train data or not
+    Args:
+        input_train_df: input train data frame
+
+    Returns:
+        true if the count of species is greater than 2
+    """
+    species_count = input_train_df.select("species").distinct().count()
+
+    if species_count > 2:
+        return True
+
+
 def split_data(data: DataFrame, parameters: Dict) -> Tuple:
     """Splits data into features and targets training and test sets.
 
@@ -26,37 +40,38 @@ def split_data(data: DataFrame, parameters: Dict) -> Tuple:
         weights=[parameters["train_fraction"], 1 - parameters["train_fraction"]]
     )
 
-    X_train = data_train.drop(parameters["target_column"])
-    X_test = data_test.drop(parameters["target_column"])
-    y_train = data_train.select(parameters["target_column"])
-    y_test = data_test.select(parameters["target_column"])
+    if _species_count_validation(data_train):
+        x_train = data_train.drop(parameters["target_column"])
+        x_test = data_test.drop(parameters["target_column"])
+        y_train = data_train.select(parameters["target_column"])
+        y_test = data_test.select(parameters["target_column"])
 
-    return X_train, X_test, y_train, y_test
+        return x_train, x_test, y_train, y_test
 
 
 def make_predictions(
-    X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame
+    x_train: pd.DataFrame, x_test: pd.DataFrame, y_train: pd.DataFrame
 ) -> DataFrame:
     """Uses 1-nearest neighbour classifier to create predictions.
 
     Args:
-        X_train: Training data of features.
+        x_train: Training data of features.
         y_train: Training data for target.
-        X_test: Test data for features.
+        x_test: Test data for features.
 
     Returns:
         y_pred: Prediction of the target variable.
     """
 
-    X_train_numpy = X_train.to_numpy()
-    X_test_numpy = X_test.to_numpy()
+    x_train_numpy = x_train.to_numpy()
+    x_test_numpy = x_test.to_numpy()
 
     squared_distances = np.sum(
-        (X_train_numpy[:, None, :] - X_test_numpy[None, :, :]) ** 2, axis=-1
+        (x_train_numpy[:, None, :] - x_test_numpy[None, :, :]) ** 2, axis=-1
     )
     nearest_neighbour = squared_distances.argmin(axis=0)
     y_pred = y_train.iloc[nearest_neighbour]
-    y_pred.index = X_test.index
+    y_pred.index = x_test.index
 
     return y_pred
 
