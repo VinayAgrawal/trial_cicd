@@ -24,7 +24,7 @@ jobs:
           pip install -r src/requirements.txt
           pip install pylint
 
-      - name: "🔍 run tests"
+      - name: "run tests"
         run: pytest
 
       - name: "run pylint"
