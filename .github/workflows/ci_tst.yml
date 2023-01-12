@@ -24,11 +24,11 @@ jobs:
           pip install -r src/requirements.txt
           pip install pylint
 
-      - name: "run pylint"
-        run: pylint $(git ls-files 'src/*.py')
-
       - name: "🔍 run tests"
         run: pytest
+
+      - name: "run pylint"
+        run: pylint $(git ls-files 'src/*.py')
 
 #  lint:
 #    name: Code standards
