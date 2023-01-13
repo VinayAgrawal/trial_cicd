@@ -43,12 +43,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
-        run: |
-          timestamp=$(date +%Y%m%d%H%M%S)
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: vinayagrawalqb/test-repo:$timestamp
+          tags: vinayagrawalqb/test-repo:$(date +%Y%m%d%H%M%S)
 
 #      - name: Build the Docker image
 #        run: docker build . --file Dockerfile --tag trial_cicd_docker:$(date +%s)
