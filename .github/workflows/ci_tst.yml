@@ -46,7 +46,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: vinayagrawalqb/test-repo:$(date +%Y%m%d%H%M%S)
+          tags: vinayagrawalqb/test-repo:$(date +%s)
 
 #      - name: Build the Docker image
 #        run: docker build . --file Dockerfile --tag trial_cicd_docker:$(date +%s)
