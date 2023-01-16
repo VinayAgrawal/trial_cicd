@@ -49,10 +49,27 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
+        id: gen_tags
+        run: |
+          if 1=1; then
+            timestamp=$(date +%Y%m%d%H%M%S)
+#            echo $timestamp
+            TAGS='["vinayagrawalqb/test-repo:latest","user/image:$timestamp"]'
+#          else
+#            timestamp() {
+#            date +"%T" # current time
+#            }
+#            TAGS='["vinayagrawalqb/test-repo:timestamp"]'
+          fi
+          echo '::set-output name=tags::'$TAGS
+
+      - name: Build and push
+        id: build
         uses: docker/build-push-action@v3
+        need: gen_tags
         with:
           push: true
-          tags: vinayagrawalqb/test-repo:${{ steps.timestamp.outputs }}
+          tags: vinayagrawalqb/test-repo:${{ steps.timestamp.outputs.tags }}
 
 #      - name: Build the Docker image
 #        run: docker build . --file Dockerfile --tag trial_cicd_docker:$(date +%s)
