@@ -23,4 +23,7 @@ FROM runtime-environment
 
 EXPOSE 8888
 
+CMD ["date"]
 CMD ["kedro", "run"]
+CMD ["date"]
+CMD ["echo 'run success!'"]

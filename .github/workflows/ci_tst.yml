@@ -52,7 +52,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: vinayagrawalqb/test-repo:${{ github.sha }}
+          tags: vinayagrawalqb/test-repo:${{ github.sha }}, vinayagrawalqb/test-repo:latest
 
 #      - name: Build and push
 #        id: gen_tags
